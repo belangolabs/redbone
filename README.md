@@ -1,4 +1,4 @@
-# Charon
+# Redbone
 
 A multi-platform social media feature store for easy querying and analysis.
 
