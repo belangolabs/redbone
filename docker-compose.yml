@@ -12,7 +12,3 @@ services:
       - data:/raw-data
 volumes:
   data: 
-    
-# redbone container
-# volume
-# jupyter container
