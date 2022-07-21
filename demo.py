@@ -1,20 +1,12 @@
-import tweepy
-import yaml
 import json
 
-secrets = yaml.safe_load(open("secrets/twitter.yml",'r'))
+from redbone.wrapper.twitter import TwitterWrapper
 
-auth = tweepy.OAuth1UserHandler(
-   secrets["consumer_key"], 
-   secrets["consumer_secret"], 
-   secrets["access_token"], 
-   secrets["access_token_secret"],
-)
+tweet_wrapper = TwitterWrapper()
 
-api = tweepy.API(auth)
+# TODO on interface
+public_tweets = tweet_wrapper.home_timeline()
 
-public_tweets = api.home_timeline()
-
-with open("data/demo_tweets.jsonl", 'w') as f:
+with open("data/demo_tweets2.jsonl", 'w') as f:
     for tweet in public_tweets:
         print(json.dumps(tweet._json), file=f)
