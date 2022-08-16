@@ -1,7 +1,6 @@
-import json
 import strawberry
 
-from src.schema import Query
+from redbone.schema import Query
 
 
 if __name__ == "__main__":

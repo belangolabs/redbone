@@ -1,5 +1,5 @@
 import json
-from typing import Dict, Any, List, Optional
+from typing import List, Optional
 import random
 import strawberry
 import string
@@ -8,7 +8,7 @@ import time
 from pathlib import Path
 from datetime import datetime
 
-from src.wrapper.twitter import TwitterWrapper, TwitterStreamClient
+from redbone.source.twitter import TwitterWrapper, TwitterStreamClient
 
 
 @strawberry.type
@@ -27,10 +27,8 @@ class DataOutput:
 
 def generate_out_location(location_id: str):
     DATA_DIR = Path("data/")
-    return (
-        DATA_DIR
-        / f"{location_id}_{''.join(random.choices(string.ascii_uppercase + string.digits, k=10))}.jsonl"
-    )
+    random_str = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
+    return DATA_DIR / f"{location_id}_{random_str}.jsonl"
 
 
 def get_timeline():

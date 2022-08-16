@@ -1,4 +1,3 @@
-from typing import Any, Dict
 import tweepy
 import yaml
 
@@ -17,13 +16,7 @@ class TwitterWrapper:
 
         auth = tweepy.OAuth1UserHandler(
             secrets["consumer_key"],
-            secrets["consumer_key"],
-            secrets["consumer_key"],
             secrets["consumer_secret"],
-            secrets["consumer_secret"],
-            secrets["consumer_secret"],
-            secrets["access_token"],
-            secrets["access_token"],
             secrets["access_token"],
             secrets["access_token_secret"],
         )
@@ -44,9 +37,9 @@ class TwitterStreamClient(tweepy.StreamingClient):
         super().__init__(secrets["bearer_token"])
         if rules:
             self.add_rules(rules)
-            print(self.get_rules())
 
     def add_rules(self, rules):
+        # TODO: simplify how rules are generated between this and schema
         tweepy_rules = [
             tweepy.StreamRule(value=rule.get("value"), tag=rule.get("tag"))
             for rule in rules
@@ -62,9 +55,4 @@ class TwitterStreamClient(tweepy.StreamingClient):
         if old_rules:
             old_rules = old_rules.data
         for rule in old_rules:
-            print(rule)
             self.delete_rules([rule.id])
-
-
-if __name__ == "__main__":
-    main()
