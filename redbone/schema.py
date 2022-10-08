@@ -1,14 +1,14 @@
 import json
-from typing import List, Optional
 import random
-import strawberry
 import string
 import time
-
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+from typing import List, Optional
 
-from redbone.source.twitter import TwitterWrapper, TwitterStreamClient
+import strawberry
+
+from redbone.source.twitter import TwitterStreamClient, TwitterWrapper
 
 
 @strawberry.type
@@ -25,9 +25,14 @@ class DataOutput:
     end: str
 
 
-def generate_out_location(location_id: str):
+def random_id(length=10):
+    chars = string.ascii_uppercase + string.digits
+    return "".join(random.choices(chars, k=length))
+
+
+def generate_out_location(location_id: str) -> Path:
     DATA_DIR = Path("data/")
-    random_str = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
+    random_str = random_id(length=10)
     return DATA_DIR / f"{location_id}_{random_str}.jsonl"
 
 
@@ -42,20 +47,23 @@ def get_timeline():
                 print(json.dumps(tweet._json), file=f)
             end = datetime.now()
         status = "completed"
-    except Exception as e:
+    except Exception as ex:
         start = datetime.now()
-        status = "failure: {}".format(str(e))
+        status = f"failure: {str(ex)}"
         end = start
     return DataOutput(
         status=status,
-        out_location=out_location,
+        out_location=str(out_location),
         start=datetime.isoformat(start),
         end=datetime.isoformat(end),
     )
 
 
 def run_stream(duration: int, rules: Optional[List[str]]):
-    filter_rules = [{"value": rule, "tag": i} for i, rule in enumerate(rules)]
+    if rules:
+        filter_rules = [{"value": rule, "tag": i} for i, rule in enumerate(rules)]
+    else:
+        filter_rules = []
     start = datetime.now()
     out_location = generate_out_location("stream")
     try:
@@ -72,13 +80,13 @@ def run_stream(duration: int, rules: Optional[List[str]]):
         stream.cleanup_rules()
         status = "completed"
         end = datetime.now()
-    except Exception as e:
+    except Exception as ex:
         start = datetime.now()
-        status = "failure: {}".format(str(e))
+        status = f"failure: {str(ex)}"
         end = start
     return DataOutput(
         status=status,
-        out_location=out_location,
+        out_location=str(out_location),
         start=datetime.isoformat(start),
         end=datetime.isoformat(end),
     )

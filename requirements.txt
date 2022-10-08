@@ -6,6 +6,3 @@ faust-streaming
 strawberry-graphql[debug-server]
 # TikTokApi  # TikTok
 tweepy # Twitter
-pytest # dev
-black # dev
-flake8 # dev
