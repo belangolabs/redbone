@@ -1,0 +1,15 @@
+name:  redbone
+channels:
+  - defaults
+dependencies:
+  - python=3.9.*
+  - pandas>=1.4,<1.5
+  - jupyter
+  - pytest
+  - black
+  - flake8
+  - pip
+  - pip:
+    - feast
+    # TikTok specific
+    - TikTokApi
