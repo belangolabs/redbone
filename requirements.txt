@@ -1,11 +1,6 @@
-# pandas>=1.4,<1.5
-pyyaml
-# jupyter
-feast >= 0.20.*
-faust-streaming
-strawberry-graphql[debug-server]
+pyyaml>=6.0,<7.0
+feast >= 0.26.*,<0.27
+faust-streaming>=0.8.11,<0.9.0
+strawberry-graphql[debug-server]>=0.133.5,<1.0.0
 # TikTokApi  # TikTok
-tweepy # Twitter
-pytest # dev
-black # dev
-flake8 # dev
+tweepy>=4.10.0,<5.0.0 # Twitter
