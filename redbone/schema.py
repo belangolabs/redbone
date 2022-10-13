@@ -4,7 +4,7 @@ import string
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import strawberry
 
@@ -60,6 +60,7 @@ def get_timeline():
 
 
 def run_stream(duration: int, rules: Optional[List[str]]):
+    filter_rules: List[Dict[str, Any]]
     if rules:
         filter_rules = [{"value": rule, "tag": i} for i, rule in enumerate(rules)]
     else:
