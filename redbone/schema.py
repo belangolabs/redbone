@@ -26,17 +26,20 @@ class DataOutput:
 
 
 def random_id(length=10):
+    """Generate an random id."""
     chars = string.ascii_uppercase + string.digits
     return "".join(random.choices(chars, k=length))
 
 
 def generate_out_location(location_id: str) -> Path:
+    """Generate a random id for a save location"""
     DATA_DIR = Path("data/")
     random_str = random_id(length=10)
     return DATA_DIR / f"{location_id}_{random_str}.jsonl"
 
 
 def get_timeline():
+    """Pull from the Twitter timeline"""
     tweet_wrapper = TwitterWrapper()
 
     out_location = generate_out_location("timeline")
@@ -59,7 +62,8 @@ def get_timeline():
     )
 
 
-def run_stream(duration: int, rules: Optional[List[str]]):
+def run_stream(duration: int, rules: Optional[List[str]]) -> DataOutput:
+    """Collect from a filtered Twitter stream for a certain number of seconds."""
     filter_rules: List[Dict[str, Any]]
     if rules:
         filter_rules = [{"value": rule, "tag": i} for i, rule in enumerate(rules)]
